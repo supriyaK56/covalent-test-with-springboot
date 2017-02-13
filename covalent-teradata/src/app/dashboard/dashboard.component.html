@@ -1,0 +1,62 @@
+<td-layout-nav toolbarTitle="Person are as follows" logo="svgIconName">
+  <table td-data-table>
+    <th td-data-table-column
+      *ngFor="let column of columns"
+      [numeric]="column.numeric">
+    {{column.label}}
+    </th>
+    <tr td-data-table-row *ngFor="let row of userDetail">
+      <td td-data-table-cell *ngFor="let column of columns" [numeric]="column.numeric">
+      {{column.format ? column.format(row[column.name]) : row[column.name]}}
+      </td>
+      <td (click)="clickForEdit(row)">
+        <button md-icon-button>
+          <md-icon class="tc-black-700">edit</md-icon>
+        </button></td> 
+      <td (click)="clickForDelete(row)">
+        <button md-icon-button>
+          <md-icon class="tc-black-700">delete</md-icon>
+      </button></td>
+     </tr>
+  </table>
+<button md-icon-button md-mini-fab color="accent" (click)="addUser()">
+  <md-icon>add</md-icon>
+</button>
+<div *ngIf = "addFlag === true || editFlag === true">
+  <h1>  Enter Your Details Here</h1>
+   
+  <div  *ngIf = "addFlag === true">
+    <div layout="row" layout-margin>
+          <md-input-container flex >
+            <input md-input placeholder="Enter name"  #name>
+          </md-input-container >
+          <md-input-container flex>
+            <input  md-input placeholder="Enter Email-id"  #email>
+          </md-input-container>
+    </div>
+    <div>
+        <button md-mini-fab disabled  color="primary" >
+          <md-icon (click)="onSubmit(name.value,email.value)">check circle</md-icon>
+        </button>
+    </div>
+  </div>
+<div *ngIf = "editFlag === true">
+  <div layout="row" layout-margin>
+      <md-input-container flex >
+        <input  [(ngModel)]="n" md-input placeholder="Enter name"   #name>
+      </md-input-container >
+      <md-input-container flex>
+        <input [(ngModel)]="e" md-input placeholder="Enter Email-id"  #email>
+      </md-input-container>
+  </div>
+  
+  <div>
+      <button md-mini-fab disabled  color="primary" >
+        <md-icon (click)="onUpdate(name.value,email.value)">update</md-icon>
+      </button> 
+  </div>
+</div>
+</div>
+</td-layout-nav>
+
+
